@@ -19,20 +19,22 @@
 
         <nav>
 
-            {% if not hide_nav %}
+
             <div class="user">
-                <a href="{% url 'dashboard' %}">Dashboard</a>
-                <a href="{% url 'create fruit' %}">Add Fruit</a>
-                <a href="{% url 'details profile' %}">Profile</a>
+                <a href="{% url 'login_user' %}">Login</a>
+                <a href="{% url 'register_user' %}">Register</a>
+                <a href="">ЗА НАС</a>
+                <a href="">ЕКИП</a>
+                <a href="{% url 'service_list' %}">УСЛУГИ</a>
             </div>
-            {% else %}
+
             <!-- If user profile has NOT been created -->
             <div class="guest">
 
-                <a href="{% url 'create profile' %}">Create Profile</a>
+                <a href="">Create Profile</a>
 
             </div>
-            {% endif %}
+
         </nav>
     </header>
 
@@ -44,8 +46,65 @@
     </main>
 </div>
 <!-- footer -->
-<footer>
-    <p>@Fruitipedia - SoftUni Team 2023. All rights reserved.</p>
-</footer>
+<footer id="footer">
+		<div class="footer-top">
+			<div class="container">
+				<div class="row">
+					<div class="col-xs-12 col-sm-3">
+						<div class="footer-widget">
+							<h2>За нас</h2>
+							<p>Център за красота и здраве "Хармония" е и място, където можете да релаксирате, да се насладите на многобройните SPA услуги, да поспортувате или да побъбрите с приятели на чаша ароматно кафе в кафе "Хармония".</p>
+
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-3">
+						<div class="footer-widget">
+							<h2>Важни линкове</h2>
+							<ul>
+								<li><a href="">За нас</a></li>
+								<li><a href="">Промоции</a></li>
+								<li><a href="">Специални процедури</a></li>
+								<li><a href="">Контакти</a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-3">
+						<div class="footer-widget">
+							<h2>Контакти</h2>
+							<ul>
+								<li><i class="fa fa-send" aria-hidden="true"></i> гр. Монтана ул. "Илия Маринов" №2 </li>
+								<li><i class="fa fa-phone" aria-hidden="true"></i> 096 / 588 742</li>
+								<li><i class="fa fa-phone" aria-hidden="true"></i> 0885 535 659 - козметични услуги</li>
+								<li><i class="fa fa-phone" aria-hidden="true"></i> 0887 080 350 - маникюр</li>
+								<li><i class="fa fa-phone" aria-hidden="true"></i> 0884 348 585 - фризъорство</li>
+								<li><i class="fa fa-envelope-o" aria-hidden="true"></i> info@harmonia-bg.com</li>
+							</ul>
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-3">
+						<div class="footer-widget">
+							<h2>Работно време</h2>
+							<ul class="bussiness-hour">
+								<li>Понеделник-Петък: <span class="pull-right">10.00 - 18.30</span></li>
+								<li>Събота: <span class="pull-right">10.00 - 18.30</span></li>
+								<li>Неделя: <span class="pull-right">Почивен ден</span></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="footer-bottom">
+			<div class="container">
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="copyright text-center">
+							<p>©copyright 2017 Хармония | Всички права запазени | Powered by webborisov</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
 </body>
 </html>>

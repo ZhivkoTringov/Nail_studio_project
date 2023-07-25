@@ -1,0 +1,15 @@
+<h1>Nail Studio Services</h1>
+{% if user.is_staff %}
+    <a href="{% url 'service_create' %}" id="create-btn">Create</a>
+{% endif %}
+<ul>
+    {% for service in services %}
+        <li>
+            <strong>{{ service.name }}</strong> - {{ service.price }}лв
+            {% if user.is_staff %}
+                <a href="{% url 'service_edit' pk=service.pk %}" id="edit-btn">Edit</a>
+                <a href="{% url 'service_delete' pk=service.pk %}" id="delete-btn">Delete</a>
+            {% endif %}
+        </li>
+    {% endfor %}
+</ul>
