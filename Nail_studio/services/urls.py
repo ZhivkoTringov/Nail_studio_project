@@ -1,6 +1,6 @@
 from django.urls import path, include
 
-from Nail_studio.core.views import ServiceListView, ServiceCreateView, ServiceEditView, ServiceDeleteView
+from Nail_studio.services.views import ServiceListView, ServiceCreateView, ServiceEditView, ServiceDeleteView
 
 urlpatterns = (
     path('', include([

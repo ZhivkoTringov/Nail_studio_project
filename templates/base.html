@@ -14,15 +14,19 @@
     <header>
         <!-- Navigation -->
         <a id="logo" href="{% url 'index' %}">
-            <img id="logo-img" src="{% static '/images/logo.png' %}" alt="logo"/>
+            <img id="logo-img" src="{% static '/images/Logo.jpg' %}" alt="logo"/>
         </a>
 
         <nav>
 
 
             <div class="user">
+                {% if request.user.is_authenticated %}
+                <a href="{% url 'logout_user' %}">Logout</a>
+                {% else %}
                 <a href="{% url 'login_user' %}">Login</a>
                 <a href="{% url 'register_user' %}">Register</a>
+                {% endif %}
                 <a href="">ЗА НАС</a>
                 <a href="">ЕКИП</a>
                 <a href="{% url 'service_list' %}">УСЛУГИ</a>

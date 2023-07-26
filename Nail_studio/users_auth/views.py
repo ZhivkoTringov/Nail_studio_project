@@ -5,19 +5,20 @@ from django.forms import models
 
 from django.shortcuts import render
 
-from django.contrib.auth import views as user_views, login
+from django.contrib.auth import views as user_views, login, get_user_model
 from django.contrib.auth import forms as user_forms
 from django.contrib.auth.models import User
 from django.urls import reverse_lazy
 from django.views import generic as views
 
+UserModel = get_user_model()
 
 class RegisterUserForm(user_forms.UserCreationForm):
 
 
-    class Meta:
-        model = User
-        fields = ('username', 'email', 'first_name', 'last_name')
+    class Meta(user_forms.UserCreationForm.Meta):
+        model = UserModel
+        fields = ('email',)
 
     consent = forms.BooleanField()
 
@@ -41,5 +42,5 @@ class LoginUserView(user_views.LoginView):
 
 
 
-class LogoutUserView(views.View):
+class LogoutUserView(user_views.LogoutView):
     pass

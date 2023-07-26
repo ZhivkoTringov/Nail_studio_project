@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     'Nail_studio.appointments',
     'Nail_studio.services',
     'Nail_studio.users_auth',
+    'Nail_studio.user_profile',
+
 
 
 
@@ -144,4 +146,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 LOGIN_REDIRECT_URL = reverse_lazy('index')
+
 LOGIN_URL = reverse_lazy('login_user')
+
+LOGOUT_REDIRECT_URL = reverse_lazy('index')
+
+AUTH_USER_MODEL = 'users_auth.AppUser'
