@@ -35,4 +35,13 @@ class ServiceListView(views.ListView):
     model = Service
     template_name = 'core/services.html'
     context_object_name = 'services'
-    ordering = ['name']
+
+
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = Service.objects.values_list('categories', flat=True).distinct()
+        return context
+
+    def get_queryset(self):
+        return Service.objects.all().order_by('-categories')
