@@ -58,3 +58,12 @@ class Profile(models.Model):
         on_delete=models.CASCADE,
         primary_key=True,
     )
+
+    def save(self, *args, **kwargs):
+        # Check if the Profile instance is being created for a new AppUser
+        if not self.pk and self.user:
+            # Create a new Profile instance linked to the user
+            profile = Profile.objects.create(user=self.user)
+            self.pk = profile.pk  # Assign the primary key to the current instance
+
+        super(Profile, self).save(*args, **kwargs)
