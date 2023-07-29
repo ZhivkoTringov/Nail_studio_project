@@ -1,0 +1,20 @@
+{% extends 'proba template/site/base.html' %}
+{% load static %}
+
+{% block content %}
+        <div class="ic">More Website Templates @ TemplateMonster.com - January 13, 2014!</div>
+        <div class="container_12">
+            <div class="grid_4">
+                <div class="banner b1"><a href="#" class="maxheight">Маникюр</a><img src="{%static '/images/page-1-manicure-picture_380x284.png'%}"
+                                                                                          alt=""></div>
+            </div>
+            <div class="grid_4">
+                <div class="banner b2"><img src="{%static '/images/page1-pedicure-picture_380x284.jpg'%}" alt=""><a href="#" class="maxheight">Педикюр
+                    </a></div>
+            </div>
+            <div class="grid_4">
+                <div class="banner b3"><a href="#" class="maxheight">Микроблейдинг</a><img src="{%static '/images/page-1-microblading-picture_380x284.png'%}" alt="">
+                </div>
+            </div>
+        </div>
+{% endblock %}

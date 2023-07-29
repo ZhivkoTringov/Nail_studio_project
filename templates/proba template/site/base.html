@@ -1,0 +1,126 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{% block title %}Your Page Title{% endblock %}</title>
+    <meta charset="utf-8">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="icon" href="{% static '/images/favicon.ico' %}">
+    <link rel="shortcut icon" href="{% static '/images/favicon.ico' %}">
+    <link rel="stylesheet" href="{% static '/css/camera.css' %}">
+    <link rel="stylesheet" href="{% static '/css/style.css' %}">
+    <link href="//fonts.googleapis.com/css?family=Economica" rel="stylesheet" type="text/css">
+    <script src="{% static '/js/jquery.js' %}"></script>
+    <script src="{% static '/js/jquery-migrate-1.1.1.js' %}"></script>
+    <script src="{% static '/js/script.js' %}"></script>
+    <script src="{% static '/js/jquery.ui.totop.js' %}"></script>
+    <script src="{% static '/js/superfish.js' %}"></script>
+    <script src="{% static '/js/jquery.equalheights.js' %}"></script>
+    <script src="{% static '/js/jquery.mobilemenu.js' %}"></script>
+    <script src="{% static '/js/jquery.easing.1.3.js' %}"></script>
+    <script>
+        $(document).ready(function () {
+            $().UItoTop({easingType: 'easeOutQuart'});
+        });
+    </script>
+    <!--[if lt IE 8]>
+    <div style="clear: both; text-align:center; position: relative;">
+        <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+            <img src="http://storage.ie6countdown.com/assets/100/images/banners/warning_bar_0000_us.jpg" border="0"
+                 height="42" width="820"
+                 alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today.">
+        </a>
+    </div>
+    <![endif]-->
+    <!--[if lt IE 9]>
+    <script src="{%static '/js/html5shiv.js'%}"></script>
+    <link rel="stylesheet" media="screen" href="{%static '/css/ie.css'%}">
+    <![endif]-->
+</head>
+<body id="top">
+<div class="main_color">
+    <!--==============================header=================================-->
+    <header>
+        <div class="clear"></div>
+        <div class="container_12">
+            <div class="grid_12">
+                <h1>
+                    <a href="index.html">
+                        <img src="{% static '/images/KrasiNails_logo.png' %}" alt="Your Happy Family">
+                    </a>
+                </h1>
+            </div>
+        </div>
+        <div class="clear"></div>
+        <div class="menu_block">
+            <div class="container_12">
+                <div class="grid_12">
+                    <nav class="horizontal-nav full-width horizontalNav-notprocessed">
+                        <ul class="sf-menu">
+                            <li class="current"><a href="{% url 'service_list' %}">УСЛУГИ</a></li>
+                            <li><a href="">ЗА НАС</a></li>
+                            <li><a href="">ЕКИП</a></li>
+                            <li><a href="">ГАЛЕРИЯ</a></li>
+                            <li><a href="">КОНТАКТИ</a></li>
+                            {% if user.is_manicurist and user.is_authenticated %}
+                                <li><a href="">График</a></li>
+                            {% elif user.is_authenticated %}
+                                <li><a href="">Моите часове</a></li>
+                            {% endif %}
+
+                            {% if user.is_authenticated %}
+                                <li><a href="{% url 'profile_details' pk=request.user.pk %}">Profile</a></li>
+                            {% endif %}
+                            {% if request.user.is_authenticated %}
+                                <li><a href="{% url 'logout_user' %}">Logout</a></li>
+                            {% else %}
+                                <li><a href="{% url 'login_user' %}">Login</a></li>
+                                <li><a href="{% url 'register_user' %}">Register</a></li>
+                            {% endif %}
+                            <!-- Add authenticated user-specific links here -->
+
+                        </ul>
+                    </nav>
+                    <div class="clear"></div>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+    </header>
+    <!--==============================Content=================================-->
+    <div class="cont_wrapper">
+        <div class="content">
+            {% block content %}
+                <!-- Your content for each specific page will go here -->
+            {% endblock %}
+            <div class="clear"></div>
+        </div>
+    </div>
+    <!--==============================footer=================================-->
+</div>
+<div class="clear"></div>
+<footer>
+    <div class="container_12">
+        <div class="grid_12">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li class="current"><a href="index-1.html">Services</a></li>
+                <li><a href="index-2.html">Staff</a></li>
+                <li><a href="index-3.html">Prices</a></li>
+                <li><a href="index-4.html">Contacts</a></li>
+            </ul>
+            <div class="clear"></div>
+            <div class="socials">
+                <a href="#"><span class="fa fa-twitter"></span></a>
+                <a href="#"><span class="fa fa-facebook"></span></a>
+            </div>
+            <div class="copy">
+                Ego (C) <span id="copyright-year"></span> | <a href="#">Privacy Policy</a> | Website Template Designed
+                by <a href="http://www.templatemonster.com/" rel="nofollow">TemplateMonster.com</a>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+</footer>
+</body>
+</html>

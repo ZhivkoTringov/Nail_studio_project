@@ -60,10 +60,8 @@ class Profile(models.Model):
     )
 
     def save(self, *args, **kwargs):
-        # Check if the Profile instance is being created for a new AppUser
         if not self.pk and self.user:
-            # Create a new Profile instance linked to the user
             profile = Profile.objects.create(user=self.user)
-            self.pk = profile.pk  # Assign the primary key to the current instance
+            self.pk = profile.pk
 
         super(Profile, self).save(*args, **kwargs)

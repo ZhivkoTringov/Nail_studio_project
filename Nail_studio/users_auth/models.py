@@ -48,3 +48,7 @@ class AppUser(user_models.AbstractBaseUser, user_models.PermissionsMixin):
     is_staff = models.BooleanField(
         default=False,
     )
+
+    is_manicurist = models.BooleanField(
+        default=False,
+    )

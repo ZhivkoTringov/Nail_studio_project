@@ -7,7 +7,7 @@ from django.views import generic as views
 
 
 class IndexView(views.TemplateView):
-    template_name = 'core/index.html'
+    template_name = 'proba template/site/index.html'
 
     # def get_context_data(self, **kwargs):
     #     context = super().get_context_data(**kwargs)
