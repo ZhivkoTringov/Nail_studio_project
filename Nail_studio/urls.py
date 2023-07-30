@@ -9,5 +9,6 @@ urlpatterns = (
     path('auth/', include('Nail_studio.users_auth.urls')),
     path('services/', include('Nail_studio.services.urls')),
     path('profile/', include('Nail_studio.user_profile.urls')),
+    path('booking/', include('Nail_studio.appointments.urls')),
 
 )

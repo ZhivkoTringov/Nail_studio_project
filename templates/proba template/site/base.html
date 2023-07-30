@@ -63,9 +63,11 @@
                             <li><a href="">ГАЛЕРИЯ</a></li>
                             <li><a href="">КОНТАКТИ</a></li>
                             {% if user.is_manicurist and user.is_authenticated %}
-                                <li><a href="">График</a></li>
+                                <li><a href="{% url 'manicurist_appointments' %}">График</a></li>
                             {% elif user.is_authenticated %}
-                                <li><a href="">Моите часове</a></li>
+
+                                <li><a href="{% url 'booked_appointments' %}">Моите часове</a></li>
+                                <li><a href="{% url 'booking' %}">Online Booking</a></li>
                             {% endif %}
 
                             {% if user.is_authenticated %}

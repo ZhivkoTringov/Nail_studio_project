@@ -1,0 +1,13 @@
+{% extends 'proba template/site/base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <h1>Booked Appointments</h1>
+    <ul>
+        {% for appointment in booked_appointments %}
+            <li>{{ appointment.day }} at {{ appointment.time }} with {{ appointment.manicurist.profile.first_name }}</li>
+        {% endfor %}
+    </ul>
+
+{% endblock%}
