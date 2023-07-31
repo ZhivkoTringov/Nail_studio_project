@@ -7,7 +7,7 @@
   {% if appointments %}
     <ul>
       {% for appointment in appointments %}
-        <li>{{ appointment.day }} at {{ appointment.time }} with {{ appointment.client.first_name }}</li>
+        <li>{{ appointment.day }} at {{ appointment.time }} with {{ appointment.booked_by}}</li>
       {% endfor %}
     </ul>
   {% else %}

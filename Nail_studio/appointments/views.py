@@ -10,13 +10,14 @@ from .forms import AppointmentForm
 from .models import *
 from django.contrib import messages
 
+from ..user_profile.models import Profile
 
 UserModel = get_user_model()
 
 
 def booking(request):
     # Calling 'validWeekday' Function to Loop days you want in the next 21 days:
-    weekdays = validWeekday(22)
+    weekdays = validWeekday(31)
 
     # Only show the days that are not full:
     validateWeekdays = isWeekdayValid(weekdays)
@@ -26,8 +27,15 @@ def booking(request):
         if form.is_valid():
             appointment = form.save(commit=False)
             appointment.client = request.user
-            # Set the manicurist field to the selected manicurist from the form
             appointment.manicurist = form.cleaned_data['manicurist']
+
+            # Get the related Profile of the user who booked the appointment
+            try:
+                profile = Profile.objects.get(user=request.user)
+                appointment.booked_by = profile.first_name
+            except Profile.DoesNotExist:
+                pass  # Handle the case where the Profile doesn't exist for the user
+
             appointment.save()
             messages.success(request, "Appointment Saved!")
             return redirect('index')
@@ -212,13 +220,12 @@ def dayToWeekday(x):
 
 
 def validWeekday(days):
-    # Loop days you want in the next 21 days:
     today = datetime.now()
     weekdays = []
     for i in range(0, days):
         x = today + timedelta(days=i)
         y = x.strftime('%A')
-        if y == 'Monday' or y == 'Saturday' or y == 'Wednesday':
+        if y != 'Sunday':
             weekdays.append(x.strftime('%Y-%m-%d'))
     return weekdays
 

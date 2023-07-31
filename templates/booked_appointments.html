@@ -6,7 +6,7 @@
     <h1>Booked Appointments</h1>
     <ul>
         {% for appointment in booked_appointments %}
-            <li>{{ appointment.day }} at {{ appointment.time }} with {{ appointment.manicurist.profile.first_name }}</li>
+            <li>{{ appointment.day }} at {{ appointment.time }} {{ appointment.service }} with {{ appointment.manicurist.profile.first_name }}</li>
         {% endfor %}
     </ul>
 

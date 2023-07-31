@@ -45,6 +45,7 @@ class AppUser(user_models.AbstractBaseUser, user_models.PermissionsMixin):
         unique=True,
     )
 
+
     is_staff = models.BooleanField(
         default=False,
     )
