@@ -39,9 +39,15 @@ class Appointment(models.Model):
         related_name='booked_appointments'  # Add a related_name for reverse relationship
     )
     service = models.ForeignKey(Service, on_delete=models.CASCADE, null=False, blank=False)
-    # Add a field to store the name of the user who booked the appointment
     booked_by = models.CharField(max_length=150, blank=True, editable=False)
+    start_time = models.DateTimeField(
+        null=True,
+        blank=True,
+    )
+    end_time = models.DateTimeField(
+        null=True,
+        blank=True,
+    )
 
-    def __str__(self):
-        return f"Appointment on {self.day} at {self.time} by {self.booked_by}"
+
 

@@ -54,6 +54,10 @@ class Service(models.Model):
         blank=False,
     )
 
+    duration = models.PositiveIntegerField(
+        help_text="Duration in minutes",
+    )
+
     class Meta:
         permissions = [
             ('manage_services', 'Can manage services'),
