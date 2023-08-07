@@ -1,135 +1,73 @@
 from django.contrib.auth import mixins as user_mixins
+from django.core.mail import EmailMessage
+from django.conf import settings
 from django.shortcuts import render, redirect
-from datetime import datetime, timedelta
+from django.template.loader import render_to_string
 from django.views import generic as views
-from .forms import AppointmentForm
 from .models import *
-from django.contrib import messages
-from ..user_profile.models import Profile
+from django.urls import reverse_lazy
+from .models import Appointment
+from .forms import AppointmentForm
 
 UserModel = get_user_model()
 
 
-def validWeekday(days):
-    today = datetime.now()
-    weekdays = []
-    for i in range(0, days):
-        x = today + timedelta(days=i)
-        y = x.strftime('%A')
-        if y != 'Sunday':
-            weekdays.append(x.strftime('%Y-%m-%d'))
-    return weekdays
+class BookAppointmentView(views.View):
+    template_name = 'appointments/create_appointment.html'
+    success_url = reverse_lazy('index')  # Replace with your actual success URL
 
+    def get(self, request):
+        form = AppointmentForm()
+        return render(request, self.template_name, {'form': form})
 
-def isWeekdayValid(x):
-    validateWeekdays = []
-    for j in x:
-        if Appointment.objects.filter(day=j).count() < 10:
-            validateWeekdays.append(j)
-    return validateWeekdays
-
-
-def checkTime(times, day):
-    # Only show the time of the day that has not been selected before:
-    x = []
-    for k in times:
-        if Appointment.objects.filter(day=day, time=k).count() < 1:
-            x.append(k)
-    return x
-
-
-def dayToWeekday(x):
-    z = datetime.strptime(x, "%Y-%m-%d")
-    y = z.strftime('%A')
-    return y
-
-def booking(request):
-    weekdays = validWeekday(31)
-    validateWeekdays = isWeekdayValid(weekdays)
-
-    if request.method == 'POST':
+    def post(self, request):
         form = AppointmentForm(request.POST)
         if form.is_valid():
-            appointment = form.save(commit=False)
-            appointment.client = request.user
-            appointment.manicurist = form.cleaned_data['manicurist']
+            chosen_date = form.cleaned_data['date']
+            chosen_time = datetime.strptime(form.cleaned_data['time'], '%H:%M').time()
+            chosen_manicurist = form.cleaned_data['manicurist']
 
-            # Get the selected service duration
-            service = form.cleaned_data['service']
-            service_duration = service.duration
-            # Calculate the end time of the appointment
-            appointment_start_time = form.cleaned_data['start_time']
-            appointment_end_time = appointment_start_time + timedelta(minutes=service_duration)
-            appointment.end_time = appointment_end_time
+            start_datetime = datetime.combine(chosen_date, chosen_time)
+            end_datetime = start_datetime + timedelta(minutes=form.cleaned_data['service'].duration)
 
-            # Get the related Profile of the user who booked the appointment
-            try:
-                profile = Profile.objects.get(user=request.user)
-                appointment.booked_by = profile.first_name
-            except Profile.DoesNotExist:
-                pass  # Handle the case where the Profile doesn't exist for the user
+            overlapping_appointments = Appointment.objects.filter(
+                manicurist=chosen_manicurist,
+                start_time__lt=end_datetime,
+                end_time__gt=start_datetime
+            )
 
-            appointment.save()
-            messages.success(request, "Appointment Saved!")
-            return redirect('index')
-    else:
-        form = AppointmentForm()
+            # print("Start DateTime:", start_datetime)
+            # print("End DateTime:", end_datetime)
+            # print("Overlapping Appointments:", overlapping_appointments)
 
-    return render(request, 'booking.html', {
-        'weekdays': weekdays,
-        'validateWeekdays': validateWeekdays,
-        'form': form,
-    })
-
-
-def bookingSubmit(request):
-    user = request.user
-    times = [
-        "10:30", "11:30", "12:30", "13:30", "14:30", "15:30", "16:30", "17:30", "18:30"
-    ]
-    today = datetime.now()
-    minDate = today.strftime('%Y-%m-%d')
-    deltatime = today + timedelta(days=21)
-    strdeltatime = deltatime.strftime('%Y-%m-%d')
-    maxDate = strdeltatime
-
-    day = request.session.get('day')
-    service = request.session.get('service')
-
-    # Only show the time of the day that has not been selected before:
-    hour = checkTime(times, day)
-
-    if request.method == 'POST':
-        time = request.POST.get("time")
-        date = dayToWeekday(day)
-
-        if service:
-            if minDate <= day <= maxDate:
-                if date in ['Monday', 'Saturday', 'Wednesday']:
-                    if Appointment.objects.filter(day=day).count() < 11:
-                        if Appointment.objects.filter(day=day, time=time).count() < 1:
-                            appointment = Appointment.objects.create(
-                                user=user,
-                                service=service,
-                                day=day,
-                                time=time,
-                            )
-                            messages.success(request, "Appointment Saved!")
-                            return redirect('index')
-                        else:
-                            messages.success(request, "The Selected Time Has Been Reserved Before!")
-                    else:
-                        messages.success(request, "The Selected Day Is Full!")
-                else:
-                    messages.success(request, "The Selected Date Is Incorrect")
+            if overlapping_appointments.exists():
+                form.add_error(None, 'The hours you chose are already taken.')
             else:
-                messages.success(request, "The Selected Date Isn't In The Correct Time Period!")
-        else:
-            messages.success(request, "Please Select A Service!")
+                appointment = Appointment(
+                    manicurist=chosen_manicurist,
+                    service=form.cleaned_data['service'],
+                    booked_by=request.user.profile.first_name,
+                    start_time=start_datetime,
+                    end_time=end_datetime
+                )
+                appointment.save()
 
-    return render(request, 'bookingSubmit.html', {
-        'times': hour,
-    })
+                # Send email to the user who booked the appointment
+                template = render_to_string('email/appointment_booking_confirmation.html', {
+                    'name': request.user.profile.first_name,
+                    "service": form.cleaned_data['service'],
+                    "date": appointment.start_time
+                })
+                email = EmailMessage(
+                    'Благодарим Ви, че избрахте Краси Нейлс',
+                    template,
+                    settings.EMAIL_HOST_USER,
+                    [request.user.email],
+                )
+                email.fail_silently = True
+                email.send()
+                return redirect(self.success_url)
+        return render(request, self.template_name, {'form': form})
 
 
 class BookedAppointmentsView(user_mixins.LoginRequiredMixin, views.ListView):

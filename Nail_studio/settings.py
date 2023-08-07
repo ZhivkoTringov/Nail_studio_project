@@ -17,7 +17,6 @@ from django.urls import reverse_lazy
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
@@ -28,7 +27,6 @@ SECRET_KEY = 'django-insecure-)(i7$g=3(e4k%ogu$+8v_4kd40kayx8l%8w+k#i14uy8))9@u1
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -45,11 +43,6 @@ INSTALLED_APPS = [
     'Nail_studio.services',
     'Nail_studio.users_auth',
     'Nail_studio.user_profile',
-
-
-
-
-
 
 ]
 
@@ -84,21 +77,19 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'Nail_studio.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "nail_studio_db",
+        "NAME": "nail_studio_dbs",
         "USER": "postgres",
         "PASSWORD": "78965321",
         "HOST": "127.0.0.1",
         "PORT": "5432",
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -118,7 +109,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
@@ -129,7 +119,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
@@ -145,7 +134,6 @@ STATICFILES_DIRS = (
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
 LOGIN_REDIRECT_URL = reverse_lazy('index')
 
 LOGIN_URL = reverse_lazy('login_user')
@@ -153,3 +141,11 @@ LOGIN_URL = reverse_lazy('login_user')
 LOGOUT_REDIRECT_URL = reverse_lazy('index')
 
 AUTH_USER_MODEL = 'users_auth.AppUser'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'nails.krasi@gmail.com'
+EMAIL_HOST_PASSWORD = 'ndkuhotocehqdluy'
+

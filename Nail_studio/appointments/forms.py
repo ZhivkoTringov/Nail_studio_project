@@ -1,50 +1,74 @@
-from datetime import timedelta
-
 from django import forms
+from django.utils import timezone
+from datetime import timedelta, datetime
+from Nail_studio.services.models import Service
 from django.contrib.auth import get_user_model
-from .models import Appointment
-from .utils import is_time_slot_available
 
 UserModel = get_user_model()
 
-class AppointmentForm(forms.ModelForm):
-    manicurist = forms.ModelChoiceField(
-        queryset=UserModel.objects.filter(is_manicurist=True),
-        empty_label=None,
-        widget=forms.Select(attrs={'class': 'form-control'}),
-    )
 
-    start_time = forms.DateTimeField(
-        widget=forms.DateTimeInput(attrs={'class': 'form-control', 'type': 'datetime-local'}),
-        input_formats=["%Y-%m-%dT%H:%M"],  # Format to parse the input from the DateTimeInput
-    )
+class AppointmentForm(forms.Form):
+    DAYS_AHEAD = 30
+    TIME_SLOT = timedelta(minutes=15)
 
-    class Meta:
-        model = Appointment
-        fields = ['service', 'day', 'time', 'manicurist', 'start_time',]
+    available_dates = [(timezone.now().date() + timedelta(days=i)).strftime('%Y-%m-%d') for i in range(DAYS_AHEAD)]
+    start_time = datetime.strptime('10:00', '%H:%M').time()
+    end_time = datetime.strptime('18:00', '%H:%M').time()
+    available_times = [(start_time + i * TIME_SLOT).strftime('%H:%M') for i in
+                       range(int((end_time.hour - start_time.hour) * 60 / TIME_SLOT.seconds))]
+
+
+    date = forms.DateField(widget=forms.Select(choices=[(date, date) for date in available_dates]))
+    manicurist = forms.ModelChoiceField(queryset=UserModel.objects.filter(is_manicurist=True))
+    service = forms.ModelChoiceField(queryset=Service.objects.all())
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        if self.instance and self.instance.manicurist:
-            self.fields['manicurist'].initial = self.instance.manicurist
-            self.fields['manicurist'].widget.attrs['readonly'] = True
+        self.fields['time'] = forms.ChoiceField(choices=self.get_available_times())
+        print(self.fields['time'].choices)
+
+    def get_available_times(self):
+        start_time = datetime.strptime('10:00', '%H:%M').time()
+        end_time = datetime.strptime('18:00', '%H:%M').time()
+        TIME_SLOT = timedelta(minutes=15)
+        available_times = []
+
+        current_time = start_time
+        while current_time <= end_time:
+            available_times.append((current_time.strftime('%H:%M'), current_time.strftime('%I:%M %p')))
+            current_time = (datetime.combine(datetime.today(), current_time) + TIME_SLOT).time()
+
+
+        return available_times
 
     def clean(self):
         cleaned_data = super().clean()
-        start_time = cleaned_data.get('start_time')
-        service = cleaned_data.get('service')
+        chosen_date = cleaned_data.get('date')
+        chosen_time = cleaned_data.get('time')
+        chosen_manicurist = cleaned_data.get('manicurist')
+        service_duration = cleaned_data.get('service').duration
+        chosen_time = datetime.strptime(cleaned_data.get('time'), '%H:%M').time()
+        start_datetime = datetime.combine(chosen_date, chosen_time)
+        end_datetime = start_datetime + timedelta(minutes=service_duration)
 
-        if start_time and service:
-            # Get the service duration in minutes
-            service_duration = service.duration
 
-            # Calculate the end time of the appointment
-            end_time = start_time + timedelta(minutes=service_duration)
-
-            # Check availability and update the is_available field
-            if not is_time_slot_available(cleaned_data['day'], start_time, end_time):
-                raise forms.ValidationError("This time slot is not available.")
-
-            cleaned_data['is_available'] = True  # Update availability
+        # # Check if the chosen time slot is available
+        # if Appointment.objects.filter(
+        #         manicurist=chosen_manicurist,
+        #         start_time__lt=start_datetime + timedelta(minutes=service_duration),
+        #         end_time__gt=start_datetime
+        # ).exists():
+        #     raise forms.ValidationError("The hours you chose are already taken.")
+        # # Check for overlapping appointments
+        # overlapping_appointments = Appointment.objects.filter(
+        #     manicurist=chosen_manicurist,
+        #     start_time__lt=end_datetime,
+        #     end_time__gt=start_datetime
+        # ).exclude(pk=self.instance.pk if self.instance else None)
+        #
+        # if overlapping_appointments.exists():
+        #     raise forms.ValidationError("The chosen time slot is already booked.")
 
         return cleaned_data
+
+

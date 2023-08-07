@@ -1,3 +1,9 @@
 from django.contrib import admin
 
-# Register your models here.
+from Nail_studio.appointments.models import Appointment
+
+
+@admin.register(Appointment)
+class AppointmentsAdmin(admin.ModelAdmin):
+    pass
+
