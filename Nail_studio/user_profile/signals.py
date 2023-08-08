@@ -11,11 +11,6 @@ def create_user_profile(sender, instance, created, **kwargs):
         Profile.objects.create(user=instance)
 
 
-# users_profile/signals.py
-
-
-UserModel = get_user_model()
-
 @receiver(post_delete, sender=Profile)
 def delete_user(sender, instance, **kwargs):
     try:

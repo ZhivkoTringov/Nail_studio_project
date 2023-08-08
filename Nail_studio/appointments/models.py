@@ -1,15 +1,10 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
-
-from django.db import models
 from datetime import datetime, timedelta
-
 from Nail_studio.services.models import Service
 from django.db import models
-from django.core.exceptions import ValidationError
-from datetime import time
-UserModel = get_user_model()
 
+UserModel = get_user_model()
 
 
 class Appointment(models.Model):
@@ -22,10 +17,25 @@ class Appointment(models.Model):
         limit_choices_to={'is_manicurist': True},
         related_name='booked_appointments'
     )
-    service = models.ForeignKey(Service, on_delete=models.CASCADE, null=False, blank=False)
-    booked_by = models.CharField(max_length=150, blank=True, editable=False)
-    start_time = models.DateTimeField(null=True, blank=True)
-    end_time = models.DateTimeField(null=True, blank=True)
+    service = models.ForeignKey(
+        Service,
+        on_delete=models.CASCADE,
+        null=False,
+        blank=False,
+    )
+    booked_by = models.CharField(
+        max_length=150,
+        blank=True,
+        editable=False,
+    )
+    start_time = models.DateTimeField(
+        null=True,
+        blank=True,
+    )
+    end_time = models.DateTimeField(
+        null=True,
+        blank=True,
+    )
 
     def save(self, *args, **kwargs):
         if not self.start_time or not self.end_time:
@@ -34,11 +44,9 @@ class Appointment(models.Model):
         super(Appointment, self).save(*args, **kwargs)
 
     def calculate_start_time(self):
-        # Calculate and return the start time based on the chosen date and time
         return datetime.combine(self.date, self.time)
 
     def is_time_slot_available(self):
-        # Check if the chosen time slot is available for the manicurist
         overlapping_appointments = Appointment.objects.filter(
             manicurist=self.manicurist,
             start_time__lt=self.end_time,

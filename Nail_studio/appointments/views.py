@@ -36,10 +36,6 @@ class BookAppointmentView(views.View):
                 end_time__gt=start_datetime
             )
 
-            # print("Start DateTime:", start_datetime)
-            # print("End DateTime:", end_datetime)
-            # print("Overlapping Appointments:", overlapping_appointments)
-
             if overlapping_appointments.exists():
                 form.add_error(None, 'The hours you chose are already taken.')
             else:
@@ -52,7 +48,6 @@ class BookAppointmentView(views.View):
                 )
                 appointment.save()
 
-                # Send email to the user who booked the appointment
                 template = render_to_string('email/appointment_booking_confirmation.html', {
                     'name': request.user.profile.first_name,
                     "service": form.cleaned_data['service'],

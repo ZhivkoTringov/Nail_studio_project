@@ -1,10 +1,6 @@
-
-
 from django import forms
-from django.contrib.auth import views as user_views, login, get_user_model, get_user
+from django.contrib.auth import views as user_views, login, get_user_model
 from django.contrib.auth import forms as user_forms
-from django.contrib.auth.models import User
-from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views import generic as views
 
@@ -36,7 +32,7 @@ class RegisterUserView(views.CreateView):
 
 
 class LoginUserView(user_views.LoginView):
-    template_name = 'users_auth_templates/login.html'
+    template_name = 'Login-Template.html'
 
 
 

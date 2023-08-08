@@ -18,9 +18,15 @@ class AppointmentForm(forms.Form):
                        range(int((end_time.hour - start_time.hour) * 60 / TIME_SLOT.seconds))]
 
 
-    date = forms.DateField(widget=forms.Select(choices=[(date, date) for date in available_dates]))
-    manicurist = forms.ModelChoiceField(queryset=UserModel.objects.filter(is_manicurist=True))
-    service = forms.ModelChoiceField(queryset=Service.objects.all())
+    date = forms.DateField(
+        widget=forms.Select(choices=[(date, date) for date in available_dates])
+    )
+    manicurist = forms.ModelChoiceField(
+        queryset=UserModel.objects.filter(is_manicurist=True)
+    )
+    service = forms.ModelChoiceField(
+        queryset=Service.objects.all()
+    )
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -50,25 +56,6 @@ class AppointmentForm(forms.Form):
         chosen_time = datetime.strptime(cleaned_data.get('time'), '%H:%M').time()
         start_datetime = datetime.combine(chosen_date, chosen_time)
         end_datetime = start_datetime + timedelta(minutes=service_duration)
-
-
-        # # Check if the chosen time slot is available
-        # if Appointment.objects.filter(
-        #         manicurist=chosen_manicurist,
-        #         start_time__lt=start_datetime + timedelta(minutes=service_duration),
-        #         end_time__gt=start_datetime
-        # ).exists():
-        #     raise forms.ValidationError("The hours you chose are already taken.")
-        # # Check for overlapping appointments
-        # overlapping_appointments = Appointment.objects.filter(
-        #     manicurist=chosen_manicurist,
-        #     start_time__lt=end_datetime,
-        #     end_time__gt=start_datetime
-        # ).exclude(pk=self.instance.pk if self.instance else None)
-        #
-        # if overlapping_appointments.exists():
-        #     raise forms.ValidationError("The chosen time slot is already booked.")
-
         return cleaned_data
 
 

@@ -1,9 +1,6 @@
-from django.shortcuts import render
 from django.contrib.auth import mixins as auth_mixins
 from django.urls import reverse_lazy
 from django.views import generic as views
-
-
 from Nail_studio.services.models import Service
 
 

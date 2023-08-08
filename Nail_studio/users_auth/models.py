@@ -4,7 +4,6 @@ from django.db import models
 from django.contrib.auth import models as user_models
 
 
-
 class AppUserManager(user_models.BaseUserManager):
     use_in_migrations = True
 

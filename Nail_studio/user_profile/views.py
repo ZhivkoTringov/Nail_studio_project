@@ -1,13 +1,7 @@
-from django.contrib.auth import get_user_model
-from django.contrib.messages import success
-from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic as views
-
 from Nail_studio.user_profile.models import Profile
 
-
-# UserModel = get_user_model
 
 class ProfileDetailsView(views.DetailView):
     template_name = 'users_profile/profile_details.html'
