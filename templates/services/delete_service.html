@@ -1,9 +1,0 @@
-<div class="form">
-                    <h2>Delete Fruit</h2>
-                    <form class="edit-form" method="post" action="{% url 'service_delete' pk=service.pk %}">
-                       {{ form }}
-
-                        <button type="submit">Delete</button>
-                        {% csrf_token %}
-                    </form>
-                </div>
