@@ -1,3 +1,5 @@
+
+from django.contrib import messages
 from django.contrib.auth import mixins as user_mixins
 from django.core.mail import EmailMessage
 from django.conf import settings
@@ -23,9 +25,18 @@ class BookAppointmentView(user_mixins.LoginRequiredMixin, views.View):
     def post(self, request):
         form = AppointmentForm(request.POST)
         if form.is_valid():
+            profile = request.user.profile
+            if not profile.first_name or not profile.last_name or not profile.phone_number:
+                messages.error(request, 'Please edit your profile first!')
+
+
             chosen_date = form.cleaned_data['date']
             chosen_time = datetime.strptime(form.cleaned_data['time'], '%H:%M').time()
             chosen_manicurist = form.cleaned_data['manicurist']
+
+            if not request.user.profile.first_name or not request.user.profile.last_name or not request.user.profile.phone_number:
+                form.add_error(None, 'Моля първо попълнете профила си!')
+                return render(request, self.template_name, {'form': form})
 
             start_datetime = datetime.combine(chosen_date, chosen_time)
             end_datetime = start_datetime + timedelta(minutes=form.cleaned_data['service'].duration)

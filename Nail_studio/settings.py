@@ -137,3 +137,7 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'nails.krasi@gmail.com'
 EMAIL_HOST_PASSWORD = 'ndkuhotocehqdluy'
 
+
+
+MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
+
