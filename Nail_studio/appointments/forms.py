@@ -28,10 +28,11 @@ class AppointmentForm(forms.Form):
         queryset=Service.objects.all()
     )
 
+
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['time'] = forms.ChoiceField(choices=self.get_available_times())
-        print(self.fields['time'].choices)
 
     def get_available_times(self):
         start_time = datetime.strptime('10:00', '%H:%M').time()
@@ -46,6 +47,8 @@ class AppointmentForm(forms.Form):
 
 
         return available_times
+
+
 
     def clean(self):
         cleaned_data = super().clean()

@@ -6,6 +6,6 @@ from Nail_studio.appointments.views import BookedAppointmentsView, ManicuristApp
 
 urlpatterns = (
     path('booking/', BookAppointmentView.as_view(), name='booking'),
-    path('booked-appointments/', BookedAppointmentsView.as_view(), name='booked_appointments'),
-    path('manicurist-appointments/', ManicuristAppointmentsListView.as_view(), name='manicurist_appointments'),
+    path('booked-appointments/<int:pk>/', BookedAppointmentsView.as_view(), name='booked_appointments'),
+    path('manicurist-appointments/<int:pk>/', ManicuristAppointmentsListView.as_view(), name='manicurist_appointments'),
 )

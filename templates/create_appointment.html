@@ -1,7 +1,12 @@
-<h2>Book an Appointment</h2>
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<h4>Book an Appointment</h4>
   <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
 
-    <button type="submit">Book Appointment</button>
+    <button type="submit" class=" u-border-none  u-button-style u-custom-color-2" style="padding: 10px; border-radius: 6px" >Book Appointment</button>
   </form>
+{% endblock %}

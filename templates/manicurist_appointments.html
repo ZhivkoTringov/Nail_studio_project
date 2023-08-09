@@ -7,11 +7,11 @@
   {% if appointments %}
     <ul>
       {% for appointment in appointments %}
-        <li>{{ appointment.day }} at {{ appointment.time }} with {{ appointment.booked_by}}</li>
+        <li>На {{ appointment.day }} в {{ appointment.time }} час за {{ appointment.service }} с клиент {{ appointment.booked_by}} </li>
       {% endfor %}
     </ul>
   {% else %}
-    <p>No appointments found.</p>
+    <p>Няма запазени часове!</p>
   {% endif %}
 {% endblock %}
 

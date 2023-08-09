@@ -92,18 +92,18 @@
                     {% if user.is_manicurist and user.is_authenticated %}
                         <li class="u-nav-item"><a
                                 class="u-button-style u-nav-link u-text-active-white u-text-custom-color-2 u-text-hover-white"
-                                href="{% url 'manicurist_appointments'%}"
+                                href="{% url 'manicurist_appointments' pk=user.pk %}"
                                 style="padding: 15px 10px;">ГРАФИК</a>
                         </li>
                         {% elif user.is_authenticated %}
 
                                 <li class="u-nav-item"><a
                                 class="u-button-style u-nav-link u-text-active-white u-text-custom-color-2 u-text-hover-white"
-                                href="{% url 'manicurist_appointments'%}"
+                                href="{% url 'booked_appointments' pk=user.pk%}"
                                 style="padding: 15px 10px;">МОИТЕ ЧАСОВЕ</a>
                                 <li class="u-nav-item"><a
                                 class="u-button-style u-nav-link u-text-active-white u-text-custom-color-2 u-text-hover-white"
-                                href="{% url 'manicurist_appointments'%}"
+                                href="{% url 'booking'%}"
                                 style="padding: 15px 10px;">ЗАПАЗИ ЧАС</a>
 
                     {% endif %}

@@ -1,12 +1,13 @@
-{% extends 'proba template/site/base.html' %}
+{% extends 'base.html' %}
 {% load static %}
 
 {% block content %}
 
-    <h1>Booked Appointments</h1>
+    <h4>Моите часове</h4>
     <ul>
+
         {% for appointment in booked_appointments %}
-            <li>{{ appointment.start_time }} {{ appointment.service }} with {{ appointment.manicurist.profile.first_name }}</li>
+            <li>На {{ appointment.start_time }} запазен час за {{ appointment.service }} при {{ appointment.manicurist.profile.first_name }}</li>
         {% endfor %}
     </ul>
 

@@ -12,9 +12,9 @@ from .forms import AppointmentForm
 UserModel = get_user_model()
 
 
-class BookAppointmentView(views.View):
-    template_name = 'appointments/create_appointment.html'
-    success_url = reverse_lazy('index')  # Replace with your actual success URL
+class BookAppointmentView(user_mixins.LoginRequiredMixin, views.View):
+    template_name = 'create_appointment.html'
+    success_url = reverse_lazy('index')
 
     def get(self, request):
         form = AppointmentForm()
@@ -37,7 +37,7 @@ class BookAppointmentView(views.View):
             )
 
             if overlapping_appointments.exists():
-                form.add_error(None, 'The hours you chose are already taken.')
+                form.add_error(None, 'Часът който искате да запазите вече е зает! Моля изберете друг час!')
             else:
                 appointment = Appointment(
                     manicurist=chosen_manicurist,
@@ -46,6 +46,9 @@ class BookAppointmentView(views.View):
                     start_time=start_datetime,
                     end_time=end_datetime
                 )
+
+
+
                 appointment.save()
 
                 template = render_to_string('email/appointment_booking_confirmation.html', {
@@ -70,8 +73,11 @@ class BookedAppointmentsView(user_mixins.LoginRequiredMixin, views.ListView):
     template_name = 'booked_appointments.html'
     context_object_name = 'booked_appointments'
 
+    def get_queryset(self):
+        return Appointment.objects.filter(booked_by=self.request.user.profile.first_name)
 
-class ManicuristAppointmentsListView(views.ListView):
+
+class ManicuristAppointmentsListView(user_mixins.LoginRequiredMixin, views.ListView):
     template_name = 'manicurist_appointments.html'
     context_object_name = 'appointments'
 

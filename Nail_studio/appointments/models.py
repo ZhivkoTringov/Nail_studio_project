@@ -8,7 +8,11 @@ UserModel = get_user_model()
 
 
 class Appointment(models.Model):
-    time_ordered = models.DateTimeField(default=datetime.now, blank=False)
+    time_ordered = models.DateTimeField(
+        default=datetime.now,
+        blank=False
+    )
+
     manicurist = models.ForeignKey(
         UserModel,
         on_delete=models.CASCADE,

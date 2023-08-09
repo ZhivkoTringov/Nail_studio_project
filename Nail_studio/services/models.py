@@ -55,7 +55,6 @@ class Service(models.Model):
     )
 
     duration = models.PositiveIntegerField(
-        help_text="Duration in minutes",
     )
 
     class Meta:

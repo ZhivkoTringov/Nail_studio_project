@@ -15,14 +15,6 @@ class RegisterUserForm(user_forms.UserCreationForm):
         fields = ('email',)
 
 
-
-    consent = forms.BooleanField()
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['email'].widget.attrs.update({'class': "u-border-2 u-border-grey-10 u-grey-10 u-input u-input-rectangle u-input-1"})
-
-
 class RegisterUserView(views.CreateView):
     template_name = 'register.html'
     form_class = RegisterUserForm
