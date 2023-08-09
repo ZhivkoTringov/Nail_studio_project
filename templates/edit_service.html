@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+
+<h1>Редактиране на услуга</h1>
+    <form method="post" action="{% url 'service_edit' pk=service.pk %}">
+
+        {{ form.as_p }}
+
+        <button type="submit">Save Changes</button>
+
+
+        {% csrf_token %}
+    </form>
+
+
+{% endblock %}

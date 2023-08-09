@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+
+<div class="form">
+                    <h2>Изтиване на услуга</h2>
+                    <form class="edit-form" method="post" action="{% url 'service_delete' pk=service.pk %}">
+                       {{ form }}
+
+                        <button type="submit">Delete</button>
+                        {% csrf_token %}
+                    </form>
+                </div>
+
+{% endblock %}

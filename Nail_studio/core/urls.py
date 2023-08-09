@@ -1,10 +1,10 @@
 from django.urls import path
 
-from Nail_studio.core.views import IndexView, AboutView, ContactUsView
+from Nail_studio.core.views import IndexView, AboutView, ContactView
 
 urlpatterns = (
  path('', IndexView.as_view(), name='index'),
  path('about/', AboutView.as_view(), name='about'),
- path('contact/', ContactUsView.as_view(), name='contact'),
+ path('contact/', ContactView.as_view(), name='contact'),
 
 )

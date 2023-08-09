@@ -14,11 +14,17 @@ class RegisterUserForm(user_forms.UserCreationForm):
         model = UserModel
         fields = ('email',)
 
+
+
     consent = forms.BooleanField()
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['email'].widget.attrs.update({'class': "u-border-2 u-border-grey-10 u-grey-10 u-input u-input-rectangle u-input-1"})
 
 
 class RegisterUserView(views.CreateView):
-    template_name = 'users_auth_templates/register.html'
+    template_name = 'register.html'
     form_class = RegisterUserForm
     success_url = reverse_lazy('index')
 
@@ -32,7 +38,7 @@ class RegisterUserView(views.CreateView):
 
 
 class LoginUserView(user_views.LoginView):
-    template_name = 'Login-Template.html'
+    template_name = 'login.html'
 
 
 

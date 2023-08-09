@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <div>
+        <h4>Услиги и цени</h4>
+        {% if user.is_superuser %}
+            <a href="{% url 'service_create' %}" id="create-btn">Create</a>
+        {% endif %}
+        <div>
+            {% for category in categories %}
+                <h5>{{ category }}</h5>
+                <ul class="u-text u-text-default u-text-1 ">
+                    {% for service in services %}
+                        {% if service.categories == category %}
+                            <li>
+                                <strong>{{ service.name }}</strong> - {{ service.price }}лв
+                                {% if user.is_staff %}
+                                    <a href="{% url 'service_edit' pk=service.pk %}" id="edit-btn">Edit</a>
+                                    <a href="{% url 'service_delete' pk=service.pk %}" id="delete-btn">Delete</a>
+                                {% endif %}
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+                </div>
+                </div>
+
+            {% endfor %}
+
+{% endblock %}
+
+

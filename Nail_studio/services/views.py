@@ -7,7 +7,7 @@ from Nail_studio.services.models import Service
 class ServiceCreateView(auth_mixins.PermissionRequiredMixin, views.CreateView):
     model = Service
     fields = '__all__'
-    template_name = 'services/create_service.html'
+    template_name = 'create_service.html'
     permission_required = 'services.manage_services'
     success_url = reverse_lazy('service_list')
 
@@ -15,7 +15,7 @@ class ServiceCreateView(auth_mixins.PermissionRequiredMixin, views.CreateView):
 class ServiceEditView(auth_mixins.PermissionRequiredMixin, views.UpdateView):
     model = Service
     fields = '__all__'
-    template_name = 'services/edit_service.html'
+    template_name = 'edit_service.html'
     permission_required = 'services.manage_services'
     success_url = reverse_lazy('service_list')
 
@@ -23,14 +23,14 @@ class ServiceEditView(auth_mixins.PermissionRequiredMixin, views.UpdateView):
 class ServiceDeleteView(auth_mixins.PermissionRequiredMixin, views.DeleteView):
     model = Service
     fields = '__all__'
-    template_name = 'services/delete_service.html'
+    template_name = 'delete_service.html'
     permission_required = 'services.manage_services'
     success_url = reverse_lazy('service_list')
 
 
 class ServiceListView(views.ListView):
     model = Service
-    template_name = 'core/services.html'
+    template_name = 'services.html'
     context_object_name = 'services'
 
 
