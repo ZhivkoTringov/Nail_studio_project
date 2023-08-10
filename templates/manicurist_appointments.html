@@ -5,9 +5,13 @@
 {% block content %}
   <h1>My Appointments</h1>
   {% if appointments %}
-    <ul>
+    <ul style=''>
       {% for appointment in appointments %}
-        <li>На {{ appointment.day }} в {{ appointment.time }} час за {{ appointment.service }} с клиент {{ appointment.booked_by}} </li>
+        <li>На {{ appointment.start_time|date:"d.m.Y"  }} в {{ appointment.start_time|time:"H:i" }} час за {{ appointment.service }} с клиент {{ appointment.booked_by}}
+        <a href="{% url 'manicurist_appointments_edit' pk=appointment.pk %}" id="edit-btn" class=" u-border-none  u-button-style u-custom-color-2" style="padding: 4px; margin: 8px; border-radius: 6px" >Редактиране</a>
+                                    <a href="{% url 'manicurist_appointments_delete' pk=appointment.pk %}" id="delete-btn" class=" u-border-none  u-button-style u-custom-color-2" style="padding: 4px; margin: 8px ; border-radius: 6px" >Изтриване</a>
+        </li>
+
       {% endfor %}
     </ul>
   {% else %}

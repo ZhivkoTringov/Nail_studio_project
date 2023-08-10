@@ -9,7 +9,7 @@ from django.views import generic as views
 from .models import *
 from django.urls import reverse_lazy
 from .models import Appointment
-from .forms import AppointmentForm
+from .forms import AppointmentForm, EditAppointmentForm
 
 UserModel = get_user_model()
 
@@ -94,7 +94,44 @@ class ManicuristAppointmentsListView(user_mixins.LoginRequiredMixin, views.ListV
 
     def get_queryset(self):
         if UserModel.is_manicurist:
-            return Appointment.objects.filter(manicurist=self.request.user)
+            return Appointment.objects.filter(manicurist=self.request.user).order_by('start_time')
         else:
-            # Return an empty queryset for non-manicurist users
             return Appointment.objects.none()
+
+
+class EditAppointmentView(views.UpdateView):
+    model = Appointment
+    form_class = EditAppointmentForm
+    template_name = 'edit_appointment.html'
+    success_url = reverse_lazy('index')  # Replace with your success URL
+
+    def get_queryset(self):
+        # Limit appointments to the logged-in manicurist
+        return Appointment.objects.filter(manicurist=self.request.user)
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['instance'] = self.object
+        return kwargs
+
+
+class DeleteAppointmentView(user_mixins.LoginRequiredMixin, views.DeleteView):
+    model = Appointment
+    template_name = 'delete_appointment.html'
+    success_url = reverse_lazy('index')  # Replace with your success URL
+
+    def dispatch(self, request, *args, **kwargs):
+        # Allow only manicurists and admin to delete appointments
+        if not request.user.is_manicurist and not request.user.is_superuser:
+            return self.handle_no_permission()
+        return super().dispatch(request, *args, **kwargs)
+
+    def delete(self, request, *args, **kwargs):
+        # Add any additional logic if needed
+        return super().delete(request, *args, **kwargs)
+
+
+
+
+
+

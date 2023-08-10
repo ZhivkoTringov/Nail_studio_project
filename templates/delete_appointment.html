@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+
+<div class="form">
+                    <h2>Изтиване на час</h2>
+                    <form class="edit-form" method="post" action="{% url 'manicurist_appointments_delete' pk=appointment.pk %}">
+                       {{ form }}
+
+                        <button type="submit" class=" u-border-none  u-button-style u-custom-color-2" style="padding: 6px; border-radius: 6px">Изтрий</button>
+                        {% csrf_token %}
+                    </form>
+                </div>
+
+{% endblock %}

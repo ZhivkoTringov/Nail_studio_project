@@ -1,6 +1,8 @@
 from django import forms
 from django.utils import timezone
 from datetime import timedelta, datetime
+
+from Nail_studio.appointments.models import Appointment
 from Nail_studio.services.models import Service
 from django.contrib.auth import get_user_model
 
@@ -61,4 +63,7 @@ class AppointmentForm(forms.Form):
         end_datetime = start_datetime + timedelta(minutes=service_duration)
         return cleaned_data
 
-
+class EditAppointmentForm(forms.ModelForm):
+    class Meta:
+        model = Appointment
+        fields = ['manicurist', 'service', 'start_time', 'end_time']
