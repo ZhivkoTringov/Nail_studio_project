@@ -39,5 +39,6 @@ class ContactView(views.View):
             return redirect(self.success_url)
         return render(request, self.template_name, {'form': form})
 
-
+def custom_404(request, exception):
+    return render(request, '404-Not-Found-Template.html', status=404)
 
