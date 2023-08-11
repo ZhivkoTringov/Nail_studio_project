@@ -61,6 +61,3 @@ class Service(models.Model):
         permissions = [
             ('manage_services', 'Can manage services'),
         ]
-
-    def __str__(self):
-        return self.name

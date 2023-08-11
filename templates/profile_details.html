@@ -3,9 +3,8 @@
 
 {% block content %}
 
-    <!-- profile details section -->
-    <section id="car-details" style="padding: 20px;">
-        <h1>Profile Details</h1>
+    <section  style="padding: 20px;">
+        <h1>Профил</h1>
         <div class="info-section">
             <div>
                 <div style="display: flex;
@@ -37,10 +36,10 @@
                 <div class="buttons">
                     <a href="{% url 'profile_edit' request.user.pk %}"
                        class="edit-button u-border-none  u-button-style u-custom-color-2"
-                       style="padding: 6px; border-radius: 6px">Edit</a>
+                       style="padding: 6px; border-radius: 6px">Редактирай</a>
                     <a href="{% url 'profile_delete' request.user.pk %}"
                        class="delete-button u-border-none  u-button-style u-custom-color-2"
-                       style="padding: 6px; border-radius: 6px">Delete</a>
+                       style="padding: 6px; border-radius: 6px">Изтрий</a>
                 </div>
             </div>
         </div>

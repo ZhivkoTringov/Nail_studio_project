@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 
 from django.urls import reverse_lazy
@@ -12,9 +13,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-)(i7$g=3(e4k%ogu$+8v_4kd40kayx8l%8w+k#i14uy8))9@u1'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = []
 
 # Application definition
 
@@ -71,7 +72,7 @@ WSGI_APPLICATION = 'Nail_studio.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "nail_studio_dbs",
+        "NAME": "my_project_db",
         "USER": "postgres",
         "PASSWORD": "78965321",
         "HOST": "127.0.0.1",
@@ -137,7 +138,8 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'nails.krasi@gmail.com'
 EMAIL_HOST_PASSWORD = 'ndkuhotocehqdluy'
 
-
-
 MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
+
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "photos"
 

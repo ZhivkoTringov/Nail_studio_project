@@ -4,7 +4,7 @@
 {% block content %}
 
     <section>
-        <h4 style="color:#4f3f6c">Услиги и цени</h4>
+        <h4 style="color:#4f3f6c">Услуги и цени</h4>
         {% if user.is_superuser %}
             <a href="{% url 'service_create' %}" id="create-btn" class=" u-border-none  u-button-style u-custom-color-2" style="padding: 6px; border-radius: 6px" >Създай нова услуга</a>
         {% endif %}

@@ -1,11 +1,12 @@
-
+from django.contrib.auth import mixins as auth_mixins
 from django.core.mail import EmailMessage, send_mail
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import generic as views
 from django.conf import settings
 
-from Nail_studio.core.forms import ContactForm
+from Nail_studio.core.forms import ContactForm, GalleryPhotoForm
+from Nail_studio.core.models import GalleryPhoto
 
 
 class IndexView(views.TemplateView):
@@ -38,6 +39,32 @@ class ContactView(views.View):
             send_mail(subject, message, from_email, recipient_list)
             return redirect(self.success_url)
         return render(request, self.template_name, {'form': form})
+
+class GalleryView(views.View):
+    template_name = 'Page-1.html'
+
+    def get(self, request):
+        photos = GalleryPhoto.objects.all()
+        return render(request, self.template_name, {'photos': photos})
+
+class UploadPhotoView(auth_mixins.PermissionRequiredMixin ,views.CreateView):
+    model = GalleryPhoto
+    form_class = GalleryPhotoForm
+    template_name = 'upload_photo.html'
+    permission_required = 'phtogallery.manage_photos'
+    success_url = reverse_lazy('gallery')
+
+
+class DeletePhotoView(auth_mixins.PermissionRequiredMixin ,views.DeleteView):
+    model = GalleryPhoto
+    template_name = 'delete_photo.html'
+    permission_required = 'phtogallery.manage_photos'
+    success_url = reverse_lazy('gallery')  # Redirect after successful deletion
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Delete Photo'
+        return context
 
 def custom_404(request, exception):
     return render(request, '404-Not-Found-Template.html', status=404)
