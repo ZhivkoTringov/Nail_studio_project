@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+
+<div class="form">
+                    <h3>Сигурни ли сте, че искате да изтриете часа?</h3>
+                    <form class="edit-form" method="post" action="{% url 'manicurist_appointments_delete' pk=appointment.pk %}">
+                       {{ form }}
+
+                        <button type="submit" class=" u-border-none  u-button-style u-custom-color-2" style="margin: 6px; padding: 6px; border-radius: 6px">Изтрий</button>
+                        <a href="{% url 'manicurist_appointments' pk=user.pk%}">Откажи</a>
+                        {% csrf_token %}
+                    </form>
+                </div>
+
+{% endblock %}

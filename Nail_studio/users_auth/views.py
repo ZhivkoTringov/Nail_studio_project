@@ -16,7 +16,7 @@ class RegisterUserForm(user_forms.UserCreationForm):
 
 
 class RegisterUserView(views.CreateView):
-    template_name = 'register.html'
+    template_name = 'users_auth/register.html'
     form_class = RegisterUserForm
     success_url = reverse_lazy('index')
 
@@ -30,7 +30,7 @@ class RegisterUserView(views.CreateView):
 
 
 class LoginUserView(user_views.LoginView):
-    template_name = 'login.html'
+    template_name = 'users_auth/login.html'
 
 
 

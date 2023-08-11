@@ -10,14 +10,14 @@ from Nail_studio.core.models import GalleryPhoto
 
 
 class IndexView(views.TemplateView):
-    template_name = 'Index.html'
+    template_name = 'core/Index.html'
 
 class AboutView(views.TemplateView):
-    template_name = 'About.html'
+    template_name = 'core/About.html'
 
 
 class ContactView(views.View):
-    template_name = 'contact.html'
+    template_name = 'core/Contact.html'
     success_url = reverse_lazy('index')
 
     def get(self, request):
@@ -41,7 +41,7 @@ class ContactView(views.View):
         return render(request, self.template_name, {'form': form})
 
 class GalleryView(views.View):
-    template_name = 'Page-1.html'
+    template_name = 'gallery/photo_gallery.html'
 
     def get(self, request):
         photos = GalleryPhoto.objects.all()
@@ -50,14 +50,14 @@ class GalleryView(views.View):
 class UploadPhotoView(auth_mixins.PermissionRequiredMixin ,views.CreateView):
     model = GalleryPhoto
     form_class = GalleryPhotoForm
-    template_name = 'upload_photo.html'
+    template_name = 'gallery/upload_photo.html'
     permission_required = 'phtogallery.manage_photos'
     success_url = reverse_lazy('gallery')
 
 
 class DeletePhotoView(auth_mixins.PermissionRequiredMixin ,views.DeleteView):
     model = GalleryPhoto
-    template_name = 'delete_photo.html'
+    template_name = 'gallery/delete_photo.html'
     permission_required = 'phtogallery.manage_photos'
     success_url = reverse_lazy('gallery')  # Redirect after successful deletion
 
@@ -67,5 +67,5 @@ class DeletePhotoView(auth_mixins.PermissionRequiredMixin ,views.DeleteView):
         return context
 
 def custom_404(request, exception):
-    return render(request, '404-Not-Found-Template.html', status=404)
+    return render(request, '404_page/404-Not-Found-Template.html', status=404)
 

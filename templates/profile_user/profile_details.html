@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <section  style="padding: 20px;">
+        <h3 style="font-weight: bold">Профил</h3>
+        <div class="info-section">
+            <div>
+                <div style="display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    align-content: space-around;
+    justify-content: flex-start;
+    align-items: center;">
+                    <h4 style="padding: 6px">Име:</h4><h5>{{ profile.first_name }}</h5>
+                </div>
+                <div style="display: flex;
+                    flex-wrap: nowrap;
+                    flex-direction: row;
+                    align-content: space-around;
+                    justify-content: flex-start;
+                    align-items: center;">
+                    <h4 style="padding: 6px">Фамилия:</h4><h5>{{ profile.last_name }}</h5>
+                </div>
+                <div style="display: flex;
+                    flex-wrap: nowrap;
+                    flex-direction: row;
+                    align-content: space-around;
+                    justify-content: flex-start;
+                    align-items: center;">
+                    <h4 style="padding: 6px">Телефон:</h4><h5>{{ profile.phone_number }}</h5>
+                </div>
+
+
+                <div class="buttons">
+                    <a href="{% url 'profile_edit' request.user.pk %}"
+                       class="edit-button u-border-none  u-button-style u-custom-color-2"
+                       style="padding: 6px; border-radius: 6px">Редактирай</a>
+                    <a href="{% url 'profile_delete' request.user.pk %}"
+                       class="delete-button u-border-none  u-button-style u-custom-color-2"
+                       style="padding: 6px; border-radius: 6px">Изтрий</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

@@ -15,7 +15,7 @@ UserModel = get_user_model()
 
 
 class BookAppointmentView(user_mixins.LoginRequiredMixin, views.View):
-    template_name = 'create_appointment.html'
+    template_name = 'appointments/create_appointment.html'
     success_url = reverse_lazy('index')
 
     def get(self, request):
@@ -81,7 +81,7 @@ class BookAppointmentView(user_mixins.LoginRequiredMixin, views.View):
 
 class BookedAppointmentsView(user_mixins.LoginRequiredMixin, views.ListView):
     model = Appointment
-    template_name = 'booked_appointments.html'
+    template_name = 'appointments/booked_appointments.html'
     context_object_name = 'booked_appointments'
 
     def get_queryset(self):
@@ -89,7 +89,7 @@ class BookedAppointmentsView(user_mixins.LoginRequiredMixin, views.ListView):
 
 
 class ManicuristAppointmentsListView(user_mixins.LoginRequiredMixin, views.ListView):
-    template_name = 'manicurist_appointments.html'
+    template_name = 'appointments/manicurist_appointments.html'
     context_object_name = 'appointments'
 
     def get_queryset(self):
@@ -102,7 +102,7 @@ class ManicuristAppointmentsListView(user_mixins.LoginRequiredMixin, views.ListV
 class EditAppointmentView(views.UpdateView):
     model = Appointment
     form_class = EditAppointmentForm
-    template_name = 'edit_appointment.html'
+    template_name = 'appointments/edit_appointment.html'
     success_url = reverse_lazy('index')  # Replace with your success URL
 
     def get_queryset(self):
@@ -117,7 +117,7 @@ class EditAppointmentView(views.UpdateView):
 
 class DeleteAppointmentView(user_mixins.LoginRequiredMixin, views.DeleteView):
     model = Appointment
-    template_name = 'delete_appointment.html'
+    template_name = 'appointments/delete_appointment.html'
     success_url = reverse_lazy('index')  # Replace with your success URL
 
     def dispatch(self, request, *args, **kwargs):

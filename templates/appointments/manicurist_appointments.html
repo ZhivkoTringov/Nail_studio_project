@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+  <h3>График</h3>
+  {% if appointments %}
+    <ul style=''>
+      {% for appointment in appointments %}
+        <li>На {{ appointment.start_time|date:"d.m.Y"  }} в {{ appointment.start_time|time:"H:i" }} час за {{ appointment.service.name }} с клиент {{ appointment.booked_by}}
+        <a href="{% url 'manicurist_appointments_edit' pk=appointment.pk %}" id="edit-btn" class=" u-border-none  u-button-style u-custom-color-2" style="padding: 4px; margin: 8px; border-radius: 6px" >Редактиране</a>
+                                    <a href="{% url 'manicurist_appointments_delete' pk=appointment.pk %}" id="delete-btn" class=" u-border-none  u-button-style u-custom-color-2" style="padding: 4px; margin: 8px ; border-radius: 6px" >Изтриване</a>
+        </li>
+
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>Няма запазени часове!</p>
+  {% endif %}
+{% endblock %}
+

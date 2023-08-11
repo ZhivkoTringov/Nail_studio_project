@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+    <div class="u-black u-menu-overlay u-opacity u-opacity-70"></div>
+    </div>
+    </nav>
+    </div></header>
+    <section class="u-align-center u-clearfix u-custom-color-1 u-section-1" id="sec-f7c0">
+        <div class="u-clearfix u-sheet u-sheet-1">
+            <div class="u-clearfix u-expanded-width u-gutter-10 u-layout-wrap u-layout-wrap-1">
+                <div class="u-layout">
+                    <div class="u-layout-row">
+                        <div class="u-align-left u-container-style u-layout-cell u-left-cell u-size-30 u-layout-cell-1">
+                            <div class="u-container-layout u-container-layout-1">
+                                <div class="u-expanded u-grey-light-2 u-map">
+                                    <div class="embed-responsive">
+                                        <iframe class="embed-responsive-item"
+                                                src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3499.1880016335085!2d26.50378836907342!3d42.48188611745222!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zNDLCsDI4JzU0LjgiTiAyNsKwMzAnMjMuMiJF!5e0!3m2!1sbg!2sbg!4v1691507992175!5m2!1sbg!2sbg"
+                                                width="600" height="450" style="border:0;" allowfullscreen=""
+                                                loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="u-align-left u-container-style u-layout-cell u-right-cell u-size-30 u-layout-cell-2">
+                            <div class="u-container-layout u-valign-middle u-container-layout-2">
+                                <div class="u-form u-form-1">
+                                    {#                    <form action="{% url 'contact' %}" class="u-clearfix u-form-spacing-10 u-form-vertical u-inner-form" style="padding: 10px" source="email" name="form-1" method="post">#}
+                                    {#    {% csrf_token %}#}
+                                    {#    {{ form.as_p }}#}
+                                    {#    <button type="submit">Submit</button>#}
+                                    {#                      <div class="u-form-group u-form-name u-label-none">#}
+                                    {#                        <label for="name-c359" class="u-label">Name</label>#}
+                                    {#                        <input type="text" placeholder="Име" id="name-c359" name="name" class="u-input u-input-rectangle" required="">#}
+                                    {#                      </div>#}
+                                    {#                      <div class="u-form-email u-form-group u-label-none">#}
+                                    {#                        <label for="email-c359" class="u-label">Email</label>#}
+                                    {#                        <input type="email" placeholder="Email" id="email-c359" name="email" class="u-input u-input-rectangle" required="">#}
+                                    {#                      </div>#}
+                                    {#                      <div class="u-form-group u-form-message u-label-none">#}
+                                    {#                        <label for="message-c359" class="u-label">Address</label>#}
+                                    {#                        <textarea placeholder="Съобщение" rows="4" cols="50" id="message-c359" name="message" class="u-input u-input-rectangle" required=""></textarea>#}
+                                    {#                      </div>#}
+                                    {#                      <div class="u-form-group u-form-submit">#}
+                                    {#                        <a href="#" class="u-btn u-btn-submit u-button-style u-custom-color-2 u-custom-font u-font-roboto u-btn-1">Submit</a>#}
+                                    {#                        <input type="submit" value="submit" class="u-form-control-hidden">#}
+                                    {#                      </div>#}
+                                    {#                      <div class="u-form-send-message u-form-send-success">Thank you! Your message has been sent.</div>#}
+                                    {#                      <div class="u-form-send-error u-form-send-message">Unable to send your message. Please fix errors then try again.</div>#}
+                                    {#                      <input type="hidden" value="" name="recaptchaResponse">#}
+                                    {#                      <input type="hidden" name="formServices" value="f5964b19-b911-9678-da66-73ad1541cd4a">#}
+                                    {#                    </form>#}
+
+                                    <form method="post">
+                                        {% csrf_token %}
+                                        {{ form.as_p }}
+                                        <button type="submit" class=" u-border-none  u-button-style u-custom-color-2" style="padding: 10px; border-radius: 6px" >Изпрати</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+{% endblock %}
