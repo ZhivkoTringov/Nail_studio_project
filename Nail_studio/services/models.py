@@ -27,6 +27,7 @@ class Service(models.Model):
     MAX_DIGITS_PRICE = 5
     MAX_DECIMAL_PLACES = 2
     MAX_LENGTH_CATEGORY = 50
+    MIN_PRICE = 0.01
 
     categories = models.CharField(
         max_length=MAX_LENGTH_CATEGORY,
@@ -52,6 +53,9 @@ class Service(models.Model):
         decimal_places=MAX_DECIMAL_PLACES,
         null=False,
         blank=False,
+        validators=(
+            validators.MinValueValidator(MIN_PRICE),
+        ),
     )
 
     duration = models.PositiveIntegerField(
