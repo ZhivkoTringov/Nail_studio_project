@@ -47,7 +47,7 @@ class GalleryView(views.View):
         photos = GalleryPhoto.objects.all()
         return render(request, self.template_name, {'photos': photos})
 
-class UploadPhotoView(auth_mixins.PermissionRequiredMixin ,views.CreateView):
+class UploadPhotoView(auth_mixins.PermissionRequiredMixin, views.CreateView):
     model = GalleryPhoto
     form_class = GalleryPhotoForm
     template_name = 'gallery/upload_photo.html'
@@ -55,7 +55,7 @@ class UploadPhotoView(auth_mixins.PermissionRequiredMixin ,views.CreateView):
     success_url = reverse_lazy('gallery')
 
 
-class DeletePhotoView(auth_mixins.PermissionRequiredMixin ,views.DeleteView):
+class DeletePhotoView(auth_mixins.PermissionRequiredMixin, views.DeleteView):
     model = GalleryPhoto
     template_name = 'gallery/delete_photo.html'
     permission_required = 'phtogallery.manage_photos'

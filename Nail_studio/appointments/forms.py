@@ -19,7 +19,6 @@ class AppointmentForm(forms.Form):
     available_times = [(start_time + i * TIME_SLOT).strftime('%H:%M') for i in
                        range(int((end_time.hour - start_time.hour) * 60 / TIME_SLOT.seconds))]
 
-
     date = forms.DateField(
         widget=forms.Select(choices=[(date, date) for date in available_dates])
     )
@@ -29,8 +28,6 @@ class AppointmentForm(forms.Form):
     service = forms.ModelChoiceField(
         queryset=Service.objects.all()
     )
-
-
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -47,10 +44,7 @@ class AppointmentForm(forms.Form):
             available_times.append((current_time.strftime('%H:%M'), current_time.strftime('%I:%M %p')))
             current_time = (datetime.combine(datetime.today(), current_time) + TIME_SLOT).time()
 
-
         return available_times
-
-
 
     def clean(self):
         cleaned_data = super().clean()
@@ -62,6 +56,7 @@ class AppointmentForm(forms.Form):
         start_datetime = datetime.combine(chosen_date, chosen_time)
         end_datetime = start_datetime + timedelta(minutes=service_duration)
         return cleaned_data
+
 
 class EditAppointmentForm(forms.ModelForm):
     class Meta:
