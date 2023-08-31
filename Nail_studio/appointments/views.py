@@ -142,14 +142,14 @@ class EditAppointmentView(views.UpdateView):
 
     def get_queryset(self):
         """
-         Retrieve and return the queryset of appointments for the current manicurist.
+            Retrieve and return the queryset of appointments for the current manicurist.
         """
 
         return Appointment.objects.filter(manicurist=self.request.user)
 
     def get_form_kwargs(self):
         """
-        Get additional keyword arguments to pass to the form during initialization.
+            Get additional keyword arguments to pass to the form during initialization.
         """
 
         kwargs = super().get_form_kwargs()
