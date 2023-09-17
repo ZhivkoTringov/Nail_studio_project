@@ -15,7 +15,6 @@ class ServiceAdmin(admin.ModelAdmin):
         }),
     )
 
-
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
@@ -24,5 +23,3 @@ class ServiceAdmin(admin.ModelAdmin):
     )
 
     ordering = ('name',)
-
-

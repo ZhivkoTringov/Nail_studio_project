@@ -3,6 +3,16 @@ from django.db import models
 
 
 def validate_isalpha(value):
+
+    """
+    Validates that a given string contains only alphabetic characters or spaces.
+
+    This function is intended for use as a validator for Django model fields.
+    It checks whether the provided string contains only alphabetic characters
+    (letters) or spaces. If the string contains any other characters, a
+    ValidationError is raised.
+    """
+
     for ch in value:
         if not ch.isalpha() and not ch.isspace():
             raise exceptions.ValidationError('Трябва да съдържа само букви!')
