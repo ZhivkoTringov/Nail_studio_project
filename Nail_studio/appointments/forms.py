@@ -2,14 +2,39 @@ from django import forms
 from django.utils import timezone
 from datetime import timedelta, datetime
 
-from Nail_studio.appointments.models import Appointment
+from Nail_studio.appointments.models import Appointment, UserModel
 from Nail_studio.services.models import Service
 from django.contrib.auth import get_user_model
 
-UserModel = get_user_model()
-
 
 class AppointmentForm(forms.Form):
+    """
+      A form for creating a new appointment.
+
+      This form allows users to book appointments with manicurists for available services.
+      Users can select the date, time, manicurist, and service for the appointment.
+
+      Attributes:
+          DAYS_AHEAD (int): The number of days ahead for which appointments can be booked.
+          TIME_SLOT (timedelta): The time slot for each appointment.
+          available_dates (list): A list of available appointment dates.
+          start_time (time): The start time for appointments.
+          end_time (time): The end time for appointments.
+          available_times (list): A list of available appointment times.
+
+      Fields:
+          date (DateField): Allows users to select the appointment date.
+          manicurist (ModelChoiceField): Allows users to select a manicurist.
+          service (ModelChoiceField): Allows users to select a service.
+          time (ChoiceField): Allows users to select the appointment time based on availability.
+
+      Methods:
+          __init__(): Initializes the form with the available time choices.
+          get_available_times(): Calculates and returns available appointment times.
+          clean(): Validates and cleans the form data, ensuring a valid appointment.
+
+      """
+
     DAYS_AHEAD = 30
     TIME_SLOT = timedelta(minutes=15)
 
