@@ -13,7 +13,7 @@ services:
     env_file:
       - .env
     volumes:
-      - /tmp/app-resources/static:/app/static
+      - /tmp/app-resources/staticfiles:/app/static_files
     networks:
       - nail_studio
     links:
@@ -56,7 +56,7 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - /tmp/app-resources/static:home/app/nail-studio/staticfiles
+      - /tmp/app-resources/staticfiles:home/app/nail-studio/staticfiles
       - ./nginx/conf.d:/etc/nginx/conf.d
       - ./nginx/logs:/var/log/nginx
       - ./certbot/www:/var/www/certbot/:ro
