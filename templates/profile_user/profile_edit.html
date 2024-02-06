@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <!-- edit car form -->
+    <section id="create-page" class="auth">
+        <form id="create" method="post" action="{% url 'profile_edit' pk=request.user.pk %}">
+            <div class="container">
+
+                <h3>Редактиране</h3>
+                {{ form.as_p }}
+                <button type="submit" class=" u-border-none  u-button-style u-custom-color-2" style="margin: 6px; padding: 6px; border-radius: 6px">Запази промените</button>
+                {% csrf_token %}
+            </div>
+        </form>
+    </section>
+
+{% endblock %}

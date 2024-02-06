@@ -1,0 +1,15 @@
+.customh1 {
+    color: orange;
+  font-family: Arial;
+}
+
+.p {
+        display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+    align-content: center;
+    flex-wrap: wrap;
+    align-items: center;
+    border: solid;
+    border-color: #e06091;
+}

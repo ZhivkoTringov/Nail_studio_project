@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+  <h3>Качи снимка</h3>
+  <form  method="post" action="{% url 'upload_photo' %}" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class=" u-border-none  u-button-style u-custom-color-2" style="margin: 6px; padding: 6px; border-radius: 6px">Upload Photo</button>
+  </form>
+{% endblock %}

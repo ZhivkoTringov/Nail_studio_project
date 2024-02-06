@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+  <h1>Edit Appointment</h1>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class=" u-border-none  u-button-style u-custom-color-2" style="margin: 6px; padding: 6px; border-radius: 6px">Запази промените</button>
+  </form>
+
+{% endblock %}

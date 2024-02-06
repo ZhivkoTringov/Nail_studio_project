@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <section>
+        <h4 style="color:#4f3f6c">Услуги и цени</h4>
+        {% if user.is_superuser %}
+            <a href="{% url 'service_create' %}" id="create-btn" class=" u-border-none  u-button-style u-custom-color-2" style="padding: 6px; border-radius: 6px" >Създай нова услуга</a>
+        {% endif %}
+        <div>
+            {% for category in categories %}
+                <h5>{{ category }}</h5>
+                <ul class="u-text u-text-default u-text-1 ">
+                    {% for service in services %}
+                        {% if service.categories == category %}
+                            <li style="padding: 4px">
+                                <strong>{{ service.name }}</strong> - {{ service.price }}лв
+                                {% if user.is_staff %}
+                                    <a href="{% url 'service_edit' pk=service.pk %}" id="edit-btn" class=" u-border-none  u-button-style u-custom-color-2" style="padding: 4px; margin: 8px; border-radius: 6px" >Редактиране</a>
+                                    <a href="{% url 'service_delete' pk=service.pk %}" id="delete-btn" class=" u-border-none  u-button-style u-custom-color-2" style="padding: 4px; margin: 8px ; border-radius: 6px" >Изтриване</a>
+                                {% endif %}
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+                </div>
+
+            {% endfor %}
+    <section/>
+
+{% endblock %}
+
+

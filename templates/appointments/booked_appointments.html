@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <h4>Моите часове</h4>
+    <ul>
+
+        {% for appointment in booked_appointments %}
+            <li>На {{ appointment.start_time }} запазен час за {{ appointment.service.name }} при {{ appointment.manicurist.profile.first_name }}</li>
+        {% endfor %}
+    </ul>
+
+{% endblock%}
