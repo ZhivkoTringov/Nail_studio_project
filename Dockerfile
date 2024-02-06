@@ -12,7 +12,7 @@ RUN pip install -r requirements.txt
 
 COPY manage.py /app/manage.py
 COPY staticfiles /app/staticfiles
-COPY photos/photos /app/photos/photos
+#COPY photos/photos /app/photos/photos
 COPY templates /app/templates
 COPY Nail_studio /app/Nail_studio
 COPY tests /app/tests
