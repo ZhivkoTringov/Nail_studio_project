@@ -35,5 +35,5 @@ jobs:
             postgres
       - name: Run tests
         run: |
-          docker exec nail_studio-1  sh -c "pytest"
+          docker exec zhivkotringov/nail-studio:2024_02  sh -c "pytest"
 
