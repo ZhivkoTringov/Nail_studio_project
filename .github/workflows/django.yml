@@ -1,4 +1,4 @@
-name: Nail_studio tests
+name: Nail_studio
 
 on:
   push:
@@ -26,10 +26,10 @@ jobs:
       - uses: actions/checkout@v3
       - uses: iamsauravsharma/create-dotenv@v2.0.1
         with:
-          file-path: '/home/runner/work/Nail_studio/.env'
+          file-path: './.env'
       - uses: isbang/compose-action@v1.5.1
         with:
-          compose-file: "./docker-compose..develop.yml"
+          compose-file: "./docker-compose.develop.yml"
           services: |
             nail_studio
             postgres
