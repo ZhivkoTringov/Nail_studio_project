@@ -1,4 +1,4 @@
-name: Nail_studio tests
+name: Nail_studio
 
 on:
   push:
@@ -8,6 +8,9 @@ on:
     branches:
       - main
 
+    paths-ignore:
+      - "*.md"
+
 jobs:
   docker:
     name: Build and Test
@@ -15,24 +18,21 @@ jobs:
     steps:
       - name: Set up environment variables
         run: |
-          source .env
-
+          echo "POSTGRES_USER=postgres" >> $GITHUB_ENV
+          echo "POSTGRES_PASSWORD=postgres" >> $GITHUB_ENV
+          echo "POSTGRES_DB=postgres" >> $GITHUB_ENV
+          echo "POSTGRES_HOST=localhost" >> $GITHUB_ENV
+          echo "SECRET_KEY=super secret" >> $GITHUB_ENV
       - uses: actions/checkout@v3
-
       - uses: iamsauravsharma/create-dotenv@v2.0.1
         with:
           file-path: './.env'
-
       - uses: isbang/compose-action@v1.5.1
         with:
-          compose-file: "./docker-compose..develop.yml"
+          compose-file: "./docker-compose.develop.yml"
           services: |
             nail_studio
             postgres
-          build: true  # Optionally build the image before starting services
-
       - name: Run tests
         run: |
-          docker exec nail_studio pytest  
-
-
+          docker exec nail-studio  sh -c "pytest"
