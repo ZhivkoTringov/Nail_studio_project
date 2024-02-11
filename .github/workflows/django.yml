@@ -18,11 +18,11 @@ jobs:
     steps:
       - name: Set up environment variables
         run: |
-          echo "POSTGRES_USER=postgres" >> $GITHUB_ENV
-          echo "POSTGRES_PASSWORD=postgres" >> $GITHUB_ENV
-          echo "POSTGRES_DB=postgres" >> $GITHUB_ENV
-          echo "POSTGRES_HOST=localhost" >> $GITHUB_ENV
-          echo "SECRET_KEY=super secret" >> $GITHUB_ENV
+          echo "POSTGRES_USER=postgres" >> $MY_ENV
+          echo "POSTGRES_PASSWORD=postgres" >> $MY_ENV
+          echo "POSTGRES_DB=postgres" >> $MY_ENV
+          echo "POSTGRES_HOST=localhost" >> $MY_ENV
+          echo "SECRET_KEY=super secret" >> $MY_ENV
       - uses: actions/checkout@v3
       - uses: iamsauravsharma/create-dotenv@v2.0.1
         with:
