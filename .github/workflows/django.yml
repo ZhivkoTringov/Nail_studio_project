@@ -7,6 +7,7 @@ on:
   pull_request:
     branches:
       - main
+
     paths-ignore:
       - "*.md"
 
@@ -15,14 +16,6 @@ jobs:
     name: Build and Test
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: isbang/compose-action@v1.5.1
-        with:
-          compose-file: "./docker-compose.yaml"
-          services: |
-            nail_studio
-            postgres
-          build: true  # Add this if you need to build images
       - name: Set up environment variables
         run: |
           echo "POSTGRES_USER=postgres" >> $GITHUB_ENV
@@ -30,6 +23,16 @@ jobs:
           echo "POSTGRES_DB=postgres" >> $GITHUB_ENV
           echo "POSTGRES_HOST=localhost" >> $GITHUB_ENV
           echo "SECRET_KEY=super secret" >> $GITHUB_ENV
+      - uses: actions/checkout@v3
+      - uses: iamsauravsharma/create-dotenv@v2.0.1
+        with:
+          file-path: './.env'
+      - uses: isbang/compose-action@v1.5.1
+        with:
+          compose-file: "./docker-compose.yaml"
+          services: |
+            nail_studio
+            postgres
       - name: Run tests
         run: |
-          docker exec nail_studio_project-nail_studio-1 python manage.py test
+          docker exec nail_studio_project-nail_studio-1 "python manage.py test"
