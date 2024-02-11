@@ -29,10 +29,10 @@ jobs:
           file-path: './.env'
       - uses: isbang/compose-action@v1.5.1
         with:
-          compose-file: "./docker-compose.develop.yml"
+          compose-file: "./docker-compose.yaml"
           services: |
             nail_studio
             postgres
       - name: Run tests
         run: |
-          docker exec nail-studio  sh -c "pytest"
+          docker exec nail_studio-nail_studio-1  sh -c "pytest"
