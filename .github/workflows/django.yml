@@ -20,9 +20,9 @@ jobs:
         run: |
           echo "POSTGRES_USER=postgres" >> $GITHUB_ENV
           echo "POSTGRES_PASSWORD=postgres" >> $GITHUB_ENV
-          echo "POSTGRES_DB=postgres" >> $GITHUB_ENV
-          echo "POSTGRES_HOST=localhost" >> $GITHUB_ENV
-          echo "SECRET_KEY=super secret" >> $GITHUB_ENV
+          echo "POSTGRES_DB=nail_studio_db" >> $GITHUB_ENV
+          echo "POSTGRES_HOST=postgres" >> $GITHUB_ENV
+          echo "SECRET_KEY=seehowdeeptherabbitholegoes" >> $GITHUB_ENV
       - uses: actions/checkout@v3
       - uses: iamsauravsharma/create-dotenv@v2.0.1
         with:
