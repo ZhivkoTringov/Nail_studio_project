@@ -35,4 +35,4 @@ jobs:
             postgres
       - name: Run tests
         run: |
-          docker exec nail_studio-nail_studio-1  sh -c "python manage.py test"
+          docker exec nail_studio_project-nail_studio-1  sh -c "python manage.py test"
