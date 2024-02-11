@@ -26,7 +26,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: iamsauravsharma/create-dotenv@v2.0.1
         with:
-          file-path: '/home/runner/work/Nail_studio/Nail_studio/.env'
+          file-path: '/home/runner/work/Nail_studio/.env'
       - uses: isbang/compose-action@v1.5.1
         with:
           compose-file: "./docker-compose..develop.yml"
