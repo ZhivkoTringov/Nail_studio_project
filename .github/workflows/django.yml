@@ -35,4 +35,4 @@ jobs:
             postgres
       - name: Run tests
         run: |
-          docker exec cardflow-backend-1 sh -c "pytest"
+          docker exec nail_studio_project-nail_studio-1 sh -c "pytest"
