@@ -13,7 +13,7 @@ services:
     env_file:
       - .env
     volumes:
-      - /tmp/app-resources/static:/app/staticfiles
+      - /tmp/app-resources/static:/app/static_files
     networks:
       - nail_studio
     links:
