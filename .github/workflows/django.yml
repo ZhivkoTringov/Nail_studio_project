@@ -1,38 +1,24 @@
-name: Nail_studio
+name: CI
 
 on:
   push:
-    branches:
+    branches: 
       - main
   pull_request:
     branches:
       - main
 
-    paths-ignore:
-      - "*.md"
-
 jobs:
-  docker:
-    name: Build and Test
+  build:
+
     runs-on: ubuntu-latest
     steps:
-      - name: Set up environment variables
-        run: |
-          echo "POSTGRES_USER=postgres" >> $GITHUB_ENV
-          echo "POSTGRES_PASSWORD=postgres" >> $GITHUB_ENV
-          echo "POSTGRES_DB=nail_studio_db" >> $GITHUB_ENV
-          echo "POSTGRES_HOST=postgres" >> $GITHUB_ENV
-          echo "SECRET_KEY=seehowdeeptherabbitholegoes" >> $GITHUB_ENV
-      - uses: actions/checkout@v3
-      - uses: iamsauravsharma/create-dotenv@v2.0.1
-        with:
-          file-path: './.env'
-      - uses: isbang/compose-action@v1.5.1
-        with:
-          compose-file: "./docker-compose.yaml"
-          services: |
-            nail_studio
-            postgres
-      - name: Run tests
-        run: |
-          docker exec nail_studio_project-nail_studio-1 sh -c "pytest"
+    - uses: actions/checkout@v3
+    - name: Set up Python 3
+      uses: actions/setup-python@v3
+      with:
+        python-version: 3.x
+    - name: Install Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
