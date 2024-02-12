@@ -16,6 +16,8 @@ COPY staticfiles /app/staticfiles
 COPY templates /app/templates
 COPY Nail_studio /app/Nail_studio
 COPY tests /app/tests
+COPY sample.env /app/.env
+
 
 
 
