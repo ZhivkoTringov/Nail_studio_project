@@ -18,6 +18,8 @@ services:
       - nail_studio
     links:
       - postgres
+    depends_on:
+      - postgres
 
   postgres:
     image: postgres
